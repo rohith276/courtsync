@@ -38,7 +38,7 @@ export function AuthModal() {
       <DialogContent className="sm:max-w-md bg-card border-border">
         <DialogHeader className="mb-4 text-center">
           <div className="w-12 h-12 bg-foreground rounded-sm flex items-center justify-center mx-auto mb-4">
-            <span className="text-background font-bold text-xl font-heading">CS</span>
+            <span className="text-background font-bold text-xl font-heading">KS</span>
           </div>
           <DialogTitle className="font-heading text-2xl uppercase tracking-tight">Sign In to KortSync</DialogTitle>
           <p className="text-sm text-muted-foreground mt-2">

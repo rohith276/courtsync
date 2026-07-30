@@ -10,7 +10,7 @@ export function Footer() {
           <div className="flex flex-col gap-4 lg:col-span-1">
             <Link href="/" className="flex items-center gap-3">
               <div className="w-8 h-8 bg-background rounded-sm flex items-center justify-center">
-                <span className="text-foreground font-bold text-sm font-heading">CS</span>
+                <span className="text-foreground font-bold text-sm font-heading">KS</span>
               </div>
               <span className="text-lg font-bold tracking-tight font-heading uppercase">
                 KortSync
