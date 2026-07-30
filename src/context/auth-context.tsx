@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const pendingActionRef = useRef<(() => void) | null>(null)
 
   useEffect(() => {
-    const saved = localStorage.getItem("courtsync_user")
+    const saved = localStorage.getItem("kortsync_user")
     if (saved) {
       setUser(JSON.parse(saved))
     }
@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await res.json()
       if (data.user) {
         setUser(data.user)
-        localStorage.setItem("courtsync_user", JSON.stringify(data.user))
+        localStorage.setItem("kortsync_user", JSON.stringify(data.user))
 
         if (pendingActionRef.current) {
           pendingActionRef.current()
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     setUser(null)
-    localStorage.removeItem("courtsync_user")
+    localStorage.removeItem("kortsync_user")
     pendingActionRef.current = null
   }, [])
 

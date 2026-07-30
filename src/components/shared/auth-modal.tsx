@@ -22,14 +22,14 @@ export function AuthModal() {
     setIsLoading(true)
 
     const success = await login(email)
-    
+
     if (success) {
       toast({ title: "Welcome back!", description: "You have successfully signed in." })
       setAuthModalOpen(false)
     } else {
       toast({ title: "Sign in failed", description: "Could not find your account.", variant: "destructive" })
     }
-    
+
     setIsLoading(false)
   }
 
@@ -40,7 +40,7 @@ export function AuthModal() {
           <div className="w-12 h-12 bg-foreground rounded-sm flex items-center justify-center mx-auto mb-4">
             <span className="text-background font-bold text-xl font-heading">CS</span>
           </div>
-          <DialogTitle className="font-heading text-2xl uppercase tracking-tight">Sign In to CourtSync</DialogTitle>
+          <DialogTitle className="font-heading text-2xl uppercase tracking-tight">Sign In to KortSync</DialogTitle>
           <p className="text-sm text-muted-foreground mt-2">
             Enter your email to book courts, order food, and view your rewards.
           </p>

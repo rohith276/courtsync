@@ -25,16 +25,16 @@ interface CartDrawerProps {
 export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: CartDrawerProps) {
   const { items, itemCount, subtotal, updateQuantity, clearCart } = useCart()
   const { requireAuth } = useAuth()
-  
+
   const [couponCode, setCouponCode] = useState("")
-  const [appliedCoupon, setAppliedCoupon] = useState<{code: string, discount: number} | null>(null)
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string, discount: number } | null>(null)
   const [useRewards, setUseRewards] = useState(false)
   const [address, setAddress] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
-  
+
   // Payment state
   const [isPaymentOpen, setIsPaymentOpen] = useState(false)
-  
+
   const { toast } = useToast()
 
   const handleApplyCoupon = async () => {
@@ -56,7 +56,7 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
   const tax = subtotal * 0.05 // 5% GST for food
   let discount = appliedCoupon?.discount || 0
   let pointsUsed = 0
-  
+
   if (useRewards) {
     const maxPointsValue = rewardPoints * 0.25
     const remainingTotal = subtotal + tax - discount
@@ -64,7 +64,7 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
     const pointsNeeded = Math.ceil(remainingTotal / 0.25)
     pointsUsed = Math.min(pointsNeeded, rewardPoints)
   }
-  
+
   const rewardDiscount = pointsUsed * 0.25
   const total = Math.max(0, subtotal + tax - discount - rewardDiscount)
 
@@ -91,9 +91,9 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
     })
 
     if (res.success) {
-      toast({ 
-        title: "Order Placed Successfully", 
-        description: `Order ID: ${res.orderId}. You earned ${res.pointsEarned} points!` 
+      toast({
+        title: "Order Placed Successfully",
+        description: `Order ID: ${res.orderId}. You earned ${res.pointsEarned} points!`
       })
       clearCart()
       setIsPaymentOpen(false)
@@ -116,14 +116,14 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-8">
-          
+
           {/* Delivery Address (if applicable) */}
           {deliveryType === "DELIVERY" && (
             <div className="space-y-3">
               <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
                 <MapPin className="h-3 w-3" /> Delivery Address
               </label>
-              <textarea 
+              <textarea
                 value={address}
                 onChange={e => setAddress(e.target.value)}
                 placeholder="Enter complete address"
@@ -145,8 +145,8 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
                 </div>
                 <div className="shrink-0 flex flex-col items-end gap-2">
                   <span className="font-mono font-semibold">₹{item.price * item.quantity}</span>
-                  <QuantityControl 
-                    quantity={item.quantity} 
+                  <QuantityControl
+                    quantity={item.quantity}
                     onIncrement={() => updateQuantity(item.id, item.quantity + 1)}
                     onDecrement={() => updateQuantity(item.id, item.quantity - 1)}
                   />
@@ -167,8 +167,8 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
               </div>
             ) : (
               <div className="flex gap-2">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="Coupon Code"
                   value={couponCode}
                   onChange={e => setCouponCode(e.target.value.toUpperCase())}
@@ -186,7 +186,7 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
             <div className="border border-accent/20 bg-accent/5 p-4 flex items-start gap-3">
               <Gift className="h-5 w-5 text-accent shrink-0 mt-0.5" />
               <div className="flex-1">
-                <h4 className="font-semibold text-sm">CourtSync Rewards</h4>
+                <h4 className="font-semibold text-sm">KortSync Rewards</h4>
                 <p className="text-xs text-muted-foreground mt-1">You have {rewardPoints} points (Worth ₹{rewardPoints * 0.25})</p>
               </div>
               <label className="flex items-center cursor-pointer">
@@ -228,7 +228,7 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
         </div>
 
         <div className="p-6 border-t border-border bg-background">
-          <button 
+          <button
             onClick={handleCheckout}
             disabled={isSubmitting || items.length === 0}
             className="w-full h-14 bg-accent text-white flex items-center justify-center text-sm font-semibold uppercase tracking-widest disabled:opacity-50 transition-opacity hover:opacity-90"
@@ -241,8 +241,8 @@ export function CartDrawer({ open, onOpenChange, deliveryType, rewardPoints }: C
           </button>
         </div>
       </SheetContent>
-      
-      <PaymentModal 
+
+      <PaymentModal
         open={isPaymentOpen}
         onOpenChange={setIsPaymentOpen}
         amount={total}

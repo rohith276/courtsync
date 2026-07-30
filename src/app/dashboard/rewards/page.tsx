@@ -30,8 +30,8 @@ export default function RewardsPage() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold font-heading mb-6">CourtSync Rewards</h2>
-      
+      <h2 className="text-xl font-bold font-heading mb-6">KortSync Rewards</h2>
+
       <div className="bg-accent/10 border border-accent/20 p-6 rounded-lg mb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-1">Available Points</p>
@@ -48,7 +48,7 @@ export default function RewardsPage() {
       </div>
 
       <h3 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Transaction History</h3>
-      
+
       {txns.length === 0 ? (
         <div className="text-center p-8 text-muted-foreground">
           No reward transactions yet.
@@ -60,9 +60,8 @@ export default function RewardsPage() {
             return (
               <div key={txn.id} className="flex items-center justify-between p-4 border border-border rounded-sm">
                 <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                    isEarned ? 'bg-green-500/10 text-green-600' : 'bg-red-500/10 text-red-600'
-                  }`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isEarned ? 'bg-green-500/10 text-green-600' : 'bg-red-500/10 text-red-600'
+                    }`}>
                     {isEarned ? <ArrowDownLeft className="h-5 w-5" /> : <ArrowUpRight className="h-5 w-5" />}
                   </div>
                   <div>

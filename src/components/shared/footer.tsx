@@ -6,14 +6,14 @@ export function Footer() {
     <footer className="bg-foreground text-background">
       <div className="container mx-auto px-4 md:px-8 py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          
+
           <div className="flex flex-col gap-4 lg:col-span-1">
             <Link href="/" className="flex items-center gap-3">
               <div className="w-8 h-8 bg-background rounded-sm flex items-center justify-center">
                 <span className="text-foreground font-bold text-sm font-heading">CS</span>
               </div>
               <span className="text-lg font-bold tracking-tight font-heading uppercase">
-                CourtSync
+                KortSync
               </span>
             </Link>
             <p className="text-sm text-background/60 leading-relaxed max-w-xs">
@@ -54,11 +54,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 shrink-0" />
-                <span>hello@courtsync.in</span>
+                <span>hello@kortsync.in</span>
               </li>
               <li className="flex items-center gap-3">
                 <Globe className="h-4 w-4 shrink-0" />
-                <span>courtsync.in</span>
+                <span>kortsync.in</span>
               </li>
             </ul>
             <div className="mt-6 text-xs text-background/40">
@@ -69,7 +69,7 @@ export function Footer() {
 
         <div className="mt-16 pt-8 border-t border-background/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-background/40">
-            © {new Date().getFullYear()} CourtSync. All rights reserved.
+            © {new Date().getFullYear()} KortSync. All rights reserved.
           </p>
           <div className="flex gap-6 text-xs text-background/40">
             <Link href="/#about" className="hover:text-background transition-colors">About</Link>

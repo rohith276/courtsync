@@ -179,7 +179,7 @@ async function main() {
       userId: user.id,
       points: 120,
       type: 'BONUS',
-      description: 'Welcome bonus — thanks for joining CourtSync!',
+      description: 'Welcome bonus — thanks for joining KortSync!',
     }
   })
   console.log(`✅ Seeded 120 reward points for test user`)

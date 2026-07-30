@@ -31,11 +31,10 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 border-b ${
-        isScrolled
+      className={`fixed top-0 z-50 w-full transition-all duration-300 border-b ${isScrolled
           ? "bg-background/95 backdrop-blur-md border-border shadow-sm"
           : "bg-background/85 backdrop-blur-md border-border/50"
-      }`}
+        }`}
     >
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex h-16 md:h-20 items-center justify-between gap-4">
@@ -44,7 +43,7 @@ export function Navbar() {
               <span className="text-background font-bold text-sm font-heading">CS</span>
             </div>
             <span className="text-lg font-bold tracking-tight font-heading uppercase hidden sm:inline-block">
-              CourtSync
+              KortSync
             </span>
           </Link>
 
@@ -66,7 +65,7 @@ export function Navbar() {
 
           <div className="hidden md:flex items-center gap-2 lg:gap-3 shrink-0">
             <ThemeToggle />
-            
+
             {user ? (
               <>
                 <Button asChild variant="ghost" size="sm" className="uppercase tracking-widest text-xs font-semibold">

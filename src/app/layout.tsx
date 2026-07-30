@@ -23,7 +23,7 @@ const fontMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CourtSync | Play. Dine. Repeat.",
+  title: "KortSync | Play. Dine. Repeat.",
   description: "Premium indoor sports and dining under one roof — book badminton & cricket courts, order from our café, and manage memberships in one place.",
 };
 

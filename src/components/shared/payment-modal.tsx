@@ -24,13 +24,13 @@ export function PaymentModal({ open, onOpenChange, amount, onSuccess, title = "C
 
   const handlePay = async () => {
     setIsProcessing(true)
-    
+
     // Simulate network delay and payment gateway processing
     await new Promise(resolve => setTimeout(resolve, 2500))
-    
+
     setIsProcessing(false)
     setIsSuccess(true)
-    
+
     // Wait a brief moment to show success state before triggering callback
     setTimeout(async () => {
       await onSuccess(method)
@@ -41,7 +41,7 @@ export function PaymentModal({ open, onOpenChange, amount, onSuccess, title = "C
   return (
     <Dialog open={open} onOpenChange={(val) => !isProcessing && onOpenChange(val)}>
       <DialogContent className="sm:max-w-md bg-card border-border p-0 overflow-hidden">
-        
+
         {/* Gateway Header */}
         <div className="bg-foreground text-background p-6">
           <div className="flex justify-between items-start mb-4">
@@ -49,7 +49,7 @@ export function PaymentModal({ open, onOpenChange, amount, onSuccess, title = "C
               <div className="text-background/60 text-xs font-semibold uppercase tracking-widest mb-1">
                 Merchant
               </div>
-              <div className="font-heading font-bold text-lg">CourtSync App</div>
+              <div className="font-heading font-bold text-lg">KortSync App</div>
             </div>
             <div className="text-right">
               <div className="text-background/60 text-xs font-semibold uppercase tracking-widest mb-1">
@@ -74,13 +74,12 @@ export function PaymentModal({ open, onOpenChange, amount, onSuccess, title = "C
 
             <div className="space-y-4">
               <h4 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Select Payment Method</h4>
-              
+
               <div className="grid grid-cols-1 gap-3">
                 <button
                   onClick={() => setMethod("UPI")}
-                  className={`flex items-center gap-4 p-4 border text-left transition-all ${
-                    method === "UPI" ? "border-foreground bg-foreground/5" : "border-border hover:border-foreground/50"
-                  }`}
+                  className={`flex items-center gap-4 p-4 border text-left transition-all ${method === "UPI" ? "border-foreground bg-foreground/5" : "border-border hover:border-foreground/50"
+                    }`}
                 >
                   <div className="w-10 h-10 bg-muted flex items-center justify-center shrink-0">
                     <QrCode className="h-5 w-5" />
@@ -96,9 +95,8 @@ export function PaymentModal({ open, onOpenChange, amount, onSuccess, title = "C
 
                 <button
                   onClick={() => setMethod("CARD")}
-                  className={`flex items-center gap-4 p-4 border text-left transition-all ${
-                    method === "CARD" ? "border-foreground bg-foreground/5" : "border-border hover:border-foreground/50"
-                  }`}
+                  className={`flex items-center gap-4 p-4 border text-left transition-all ${method === "CARD" ? "border-foreground bg-foreground/5" : "border-border hover:border-foreground/50"
+                    }`}
                 >
                   <div className="w-10 h-10 bg-muted flex items-center justify-center shrink-0">
                     <CreditCard className="h-5 w-5" />
@@ -114,9 +112,8 @@ export function PaymentModal({ open, onOpenChange, amount, onSuccess, title = "C
 
                 <button
                   onClick={() => setMethod("NET_BANKING")}
-                  className={`flex items-center gap-4 p-4 border text-left transition-all ${
-                    method === "NET_BANKING" ? "border-foreground bg-foreground/5" : "border-border hover:border-foreground/50"
-                  }`}
+                  className={`flex items-center gap-4 p-4 border text-left transition-all ${method === "NET_BANKING" ? "border-foreground bg-foreground/5" : "border-border hover:border-foreground/50"
+                    }`}
                 >
                   <div className="w-10 h-10 bg-muted flex items-center justify-center shrink-0">
                     <Building2 className="h-5 w-5" />

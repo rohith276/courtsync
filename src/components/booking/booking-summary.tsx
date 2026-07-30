@@ -40,16 +40,16 @@ export function BookingSummary({
   return (
     <div className="bg-foreground text-background p-6 md:p-8 sticky top-24">
       <h3 className="text-xl font-bold font-heading mb-6">Booking Summary</h3>
-      
+
       <div className="space-y-4 mb-6">
         <div className="flex items-start gap-3 text-sm">
           <MapPin className="h-5 w-5 shrink-0 text-background/50" />
           <div>
             <p className="font-semibold">{courtName}</p>
-            <p className="text-background/50 text-xs mt-0.5">CourtSync Koramangala</p>
+            <p className="text-background/50 text-xs mt-0.5">KortSync Koramangala</p>
           </div>
         </div>
-        
+
         <div className="flex items-start gap-3 text-sm">
           <CalendarDays className="h-5 w-5 shrink-0 text-background/50" />
           <p className="font-semibold mt-0.5">{date}</p>
@@ -117,7 +117,7 @@ export function BookingSummary({
         </div>
       </div>
 
-      <Button 
+      <Button
         className="w-full h-14 text-base font-semibold uppercase tracking-widest bg-accent text-white hover:bg-accent/90 rounded-none"
         onClick={onConfirm}
         disabled={isSubmitting}
