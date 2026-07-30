@@ -1,0 +1,217 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ------------------------------------------------------
+// Core Entities
+// ------------------------------------------------------
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String?
+  phone         String?
+  role          String    @default("USER") // USER, ADMIN, STAFF
+  rewardPoints  Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  bookings      Booking[]
+  orders        Order[]
+  memberships   Membership[]
+  rewardTxns    RewardTransaction[]
+}
+
+model Court {
+  id            String    @id @default(uuid())
+  name          String
+  type          String    @default("INDOOR_WOODEN") // INDOOR_WOODEN, SYNTHETIC
+  hourlyRate    Float
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  bookings      Booking[]
+}
+
+model Booking {
+  id            String    @id @default(uuid())
+  userId        String
+  courtId       String
+  date          DateTime
+  startTime     String    // e.g. "14:00"
+  endTime       String    // e.g. "15:00"
+  status        String    @default("PENDING") // PENDING, CONFIRMED, CANCELLED, COMPLETED
+  totalAmount   Float
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user          User      @relation(fields: [userId], references: [id])
+  court         Court     @relation(fields: [courtId], references: [id])
+  payment       Payment?
+  equipments    BookingEquipment[]
+}
+
+model Equipment {
+  id            String    @id @default(uuid())
+  name          String
+  sportType     String    // BADMINTON, CRICKET
+  price         Float
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  bookingEquipments BookingEquipment[]
+}
+
+model BookingEquipment {
+  id            String    @id @default(uuid())
+  bookingId     String
+  equipmentId   String
+  quantity      Int
+  price         Float
+
+  booking       Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  equipment     Equipment @relation(fields: [equipmentId], references: [id])
+}
+
+// ------------------------------------------------------
+// Cafe & Dining
+// ------------------------------------------------------
+
+model MenuItem {
+  id              String    @id @default(uuid())
+  name            String
+  description     String?
+  price           Float
+  category        String    // STARTERS, MAINS, BOWLS, BEVERAGES, DESSERTS, QUICK_BITES
+  isAvailable     Boolean   @default(true)
+  isVeg           Boolean   @default(true)
+  isSpicy         Boolean   @default(false)
+  preparationTime Int       @default(15) // minutes
+  rating          Float     @default(0)
+  ratingCount     Int       @default(0)
+  imageUrl        String?
+  sortOrder       Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  orderItems    OrderItem[]
+}
+
+model Order {
+  id                  String    @id @default(uuid())
+  userId              String
+  status              String    @default("RECEIVED") // RECEIVED, PREPARING, READY, DELIVERED, CANCELLED
+  totalAmount         Float
+  deliveryType        String    @default("DINE_IN") // DINE_IN, TAKEAWAY, DELIVERY, COURTSIDE
+  courtId             String?   // If deliveryType is COURTSIDE
+  deliveryAddress     String?   // If deliveryType is DELIVERY
+  couponCode          String?   // Applied coupon code
+  discount            Float     @default(0)
+  rewardPointsUsed    Int       @default(0)
+  rewardPointsEarned  Int       @default(0)
+  specialInstructions String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  user          User      @relation(fields: [userId], references: [id])
+  orderItems    OrderItem[]
+  payment       Payment?
+}
+
+model OrderItem {
+  id            String    @id @default(uuid())
+  orderId       String
+  menuItemId    String
+  quantity      Int
+  price         Float     // snapshot of price at order time
+
+  order         Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItem      MenuItem  @relation(fields: [menuItemId], references: [id])
+}
+
+// ------------------------------------------------------
+// Coupons & Rewards
+// ------------------------------------------------------
+
+model Coupon {
+  id            String    @id @default(uuid())
+  code          String    @unique
+  description   String
+  discountType  String    // PERCENTAGE, FLAT
+  discountValue Float     // e.g. 20 for 20% or 100 for ₹100
+  minOrderValue Float     @default(0)
+  maxDiscount   Float?    // cap for percentage coupons
+  usageLimit    Int       @default(100)
+  usedCount     Int       @default(0)
+  validFrom     DateTime  @default(now())
+  validUntil    DateTime
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model RewardTransaction {
+  id            String    @id @default(uuid())
+  userId        String
+  points        Int       // positive = earned, negative = redeemed
+  type          String    // EARNED, REDEEMED, EXPIRED, BONUS
+  description   String
+  orderId       String?
+  createdAt     DateTime  @default(now())
+
+  user          User      @relation(fields: [userId], references: [id])
+}
+
+// ------------------------------------------------------
+// Payments & Memberships
+// ------------------------------------------------------
+
+model Payment {
+  id            String    @id @default(uuid())
+  bookingId     String?   @unique
+  orderId       String?   @unique
+  amount        Float
+  status        String    @default("PENDING") // PENDING, COMPLETED, FAILED, REFUNDED
+  method        String    @default("UPI")     // UPI, CARD, CASH, WALLET
+  transactionId String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  booking       Booking?  @relation(fields: [bookingId], references: [id])
+  order         Order?    @relation(fields: [orderId], references: [id])
+}
+
+model MembershipTier {
+  id            String    @id @default(uuid())
+  name          String    // e.g. "REGULAR", "ELITE"
+  priceMonthly  Float
+  discountPct   Int       @default(0) // 10, 20 etc.
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  memberships   Membership[]
+}
+
+model Membership {
+  id            String    @id @default(uuid())
+  userId        String
+  tierId        String
+  startDate     DateTime  @default(now())
+  endDate       DateTime
+  status        String    @default("ACTIVE") // ACTIVE, EXPIRED, CANCELLED
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user          User      @relation(fields: [userId], references: [id])
+  tier          MembershipTier @relation(fields: [tierId], references: [id])
+}
