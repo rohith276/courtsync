@@ -143,3 +143,10 @@
     }
   }
 }
+
+/* Hide Next.js dev indicator in bottom-left corner */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-dialog-overlay] {
+  display: none !important;
+}
